@@ -8,5 +8,14 @@
 
 import Foundation
 
-println("Hello, World!")
+var heap = Heap<Int>(heapProperty: < )
 
+
+var tree = RedBlackTree()
+
+for var i = 1; i <= 7; i++ {
+    tree.insert(i)
+}
+
+
+heap.insert(-5)
