@@ -26,6 +26,31 @@ class Node<T:Comparable> {
     func greand() -> Node? {
         return self.parent?.parent
     }
+    
+    class func inorder_traversal(node:Node<T>?, callback:(item:T)->()) {
+        if let theNode = node {
+            inorder_traversal(node?.left, callback: callback)
+            callback(item: theNode.item)
+            inorder_traversal(node?.right, callback: callback)
+        }
+    }
+    
+    class func postorder_traversal(node:Node<T>?, callback:(item:T)->()) {
+        if let theNode = node {
+            inorder_traversal(node?.left, callback: callback)
+            inorder_traversal(node?.right, callback: callback)
+            callback(item: theNode.item)
+        }
+    }
+    
+    class func preorder_traversal(node:Node<T>?, callback:(item:T)->()) {
+        if let theNode = node {
+            callback(item: theNode.item)
+            inorder_traversal(node?.left, callback: callback)
+            inorder_traversal(node?.right, callback: callback)
+        }
+    }
+    
 }
 
 enum NodeColor {
@@ -51,6 +76,57 @@ struct RedBlackTree <T:Comparable> {
         }
     }
     
+    func inorder_traversal(callback:(item:T)->()) {
+        Node.inorder_traversal(self.root, callback: callback)
+    }
+    
+    func postorder_traversal(callback:(item:T)->()) {
+        Node.postorder_traversal(self.root, callback: callback)
+    }
+    
+    func preorder_traversal(callback:(item:T)->()) {
+        Node.preorder_traversal(self.root, callback: callback)
+    }
+    
+    func bfs_traversal(callback:(item:T)->()) {
+        if let theRoot = self.root {
+            var queue = Array<Node<T>>()
+            queue.append(theRoot)
+            
+            while (queue.count > 0) {
+                let node = queue.removeAtIndex(0)
+                callback(item:node.item)
+                if let left = node.left {
+                    queue.append(left)
+                }
+                if let right = node.right {
+                    queue.append(right)
+                }
+            }
+        }
+    }
+    
+    func dfs_traversal(callback:(item:T)->()) {
+        if let theRoot = self.root {
+            var stack = Array<Node<T>>()
+            stack.append(theRoot)
+            
+            while (stack.count > 0) {
+                let node = stack.removeLast()
+                callback(item: node.item)
+                
+                if let left = node.left {
+                    stack.append(left)
+                }
+                if let right = node.right {
+                    stack.append(right)
+                }
+            }
+        }
+    }
+    
+    //    MARK:Private
+    
     private mutating func insert(item:T, node:Node<T>) {
         if item > node.item {
             if let right = node.right {
@@ -73,7 +149,7 @@ struct RedBlackTree <T:Comparable> {
         }
     }
     
-    //    MARK:Private
+//   MARK:Color
     
     private mutating func color_case1(node:Node<T>) {
         node.color = .Red
@@ -134,6 +210,8 @@ struct RedBlackTree <T:Comparable> {
             color_case1(greand!)
         }
     }
+    
+//    MARK:Rotations
     
     private mutating func rotateRight(y:Node<T>) {
         var x = y.left

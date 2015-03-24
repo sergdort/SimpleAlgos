@@ -17,5 +17,28 @@ for var i = 1; i <= 15; i++ {
     tree.insert(i)
 }
 
+println("Inorder")
+tree.inorder_traversal { (item) -> () in
+    println(item)
+}
 
+println("PreOrder")
+tree.preorder_traversal { (item) -> () in
+    println(item)
+}
+
+println("PostOrder")
+tree.postorder_traversal { (item) -> () in
+    println(item)
+}
+
+println("BFSOrder")
+tree.bfs_traversal { (item) -> () in
+    println(item)
+}
+
+println("DFSOrder")
+tree.dfs_traversal { (item) -> () in
+    println(item)
+}
 heap.insert(-5)
