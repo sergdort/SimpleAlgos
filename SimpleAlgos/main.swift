@@ -11,9 +11,9 @@ import Foundation
 var heap = Heap<Int>(heapProperty: < )
 
 
-var tree = RedBlackTree()
+var tree = RedBlackTree<Int>()
 
-for var i = 1; i <= 7; i++ {
+for var i = 1; i <= 15; i++ {
     tree.insert(i)
 }
 
